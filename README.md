@@ -44,3 +44,4 @@ A exportação usa Canvas + MediaRecorder no navegador. O ficheiro final inclui:
 - música, quando o navegador permitir.
 
 Em alguns navegadores o formato final pode ser `.webm` em vez de `.mp4`. Isto é normal quando o browser não suporta gravação MP4 nativa. O conteúdo visual continua completo.
+# studio-vercel

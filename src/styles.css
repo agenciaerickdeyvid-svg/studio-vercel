@@ -570,7 +570,7 @@ textarea:focus {
   justify-content: flex-start;
   align-items: center;
   gap: 14px;
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - 40px);
   overflow: auto;
   overscroll-behavior: contain;
   border: 1px solid #202024;
@@ -582,7 +582,7 @@ textarea:focus {
 }
 
 .stage-viewport {
-  --stage-scale: 0.32;
+  --stage-scale: min(calc((100vh - 340px) / 1920), 0.28);
   width: calc(1080px * var(--stage-scale));
   height: calc(1920px * var(--stage-scale));
   flex: 0 0 auto;
@@ -826,29 +826,41 @@ textarea:focus {
   position: relative;
   height: 720px;
   margin: 28px 0 0;
+  padding: 18px;
   overflow: hidden;
   border: 3px solid var(--accent);
   border-radius: 38px 38px 0 0;
-  background: #111;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08) inset,
     0 0 26px color-mix(in srgb, var(--accent), transparent 76%);
 }
 
-.media-frame img,
-.media-frame video,
-.media-placeholder {
+.media-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #0b0b0d;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.media-shell img,
+.media-shell video,
+.media-shell .media-placeholder {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.media-frame img,
-.media-frame video {
+.media-shell img,
+.media-shell video {
   transform-origin: center;
 }
 
-.media-placeholder {
+.media-shell .media-placeholder {
   display: grid;
   place-items: center;
   color: rgba(255, 255, 255, 0.22);
@@ -1014,6 +1026,32 @@ textarea:focus {
   color: var(--accent);
 }
 
+.credits-line {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 0;
+  padding: 0 34px;
+}
+
+.credits-line span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  border: 1px solid color-mix(in srgb, var(--accent), transparent 28%);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f7f7f7;
+  padding: 10px 22px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
 .cta-box {
   position: absolute;
   left: 38px;
@@ -1073,10 +1111,26 @@ textarea:focus {
   font-size: 32px;
 }
 
-.template-niche .media-frame {
-  height: 720px;
+.template-classic .media-frame {
+  height: 780px;
   margin-top: 24px;
+  padding: 20px;
+  border-radius: 36px 36px 0 0;
+}
+
+.template-classic .media-shell {
+  border-radius: 26px;
+}
+
+.template-niche .media-frame {
+  height: 620px;
+  margin-top: 24px;
+  padding: 16px;
   border-radius: 34px 34px 0 0;
+}
+
+.template-niche .media-shell {
+  border-radius: 22px;
 }
 
 .template-niche .headline-block {
@@ -1138,6 +1192,17 @@ textarea:focus {
 
 .template-niche .block-grid.count-4 .info-block span {
   font-size: 15px;
+}
+
+.template-niche .credits-line {
+  margin-top: 18px;
+  padding: 0 26px;
+}
+
+.template-niche .credits-line span {
+  min-height: 44px;
+  padding: 8px 18px;
+  font-size: 19px;
 }
 
 .template-niche .cta-box {
@@ -1240,7 +1305,7 @@ textarea:focus {
 
 @media (min-width: 1280px) {
   .stage-viewport {
-    --stage-scale: min(calc((100vh - 270px) / 1920), 0.34);
+    --stage-scale: min(calc((100vh - 320px) / 1920), 0.26);
   }
 
   .preview-panel .media-fit-panel {
@@ -1315,7 +1380,7 @@ textarea:focus {
   }
 
   .stage-viewport {
-    --stage-scale: min(calc((100vw - 96px) / 1080), 0.145);
+    --stage-scale: min(calc((100vw - 96px) / 1080), 0.135);
     order: 1;
     width: calc(1080px * var(--stage-scale));
     height: calc(1920px * var(--stage-scale));
@@ -1381,9 +1446,9 @@ textarea:focus {
   background: transparent !important;
 }
 
-.template-stage.export-overlay-capture .media-frame > img,
-.template-stage.export-overlay-capture .media-frame > video,
-.template-stage.export-overlay-capture .media-placeholder,
+.template-stage.export-overlay-capture .media-frame .media-shell > img,
+.template-stage.export-overlay-capture .media-frame .media-shell > video,
+.template-stage.export-overlay-capture .media-frame .media-shell .media-placeholder,
 .template-stage.export-overlay-capture .play-button {
   opacity: 0 !important;
   visibility: hidden !important;

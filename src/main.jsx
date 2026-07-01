@@ -408,7 +408,8 @@ function getFreshTemplate(template) {
     mediaZoom: fresh.mediaZoom || 1,
     username: fresh.username || fresh.handle,
     subHeadline: fresh.subHeadline || fresh.subline || "",
-    ctaText: fresh.ctaText || fresh.cta
+    ctaText: fresh.ctaText || fresh.cta,
+    credits: fresh.credits || ""
   };
 }
 
@@ -477,6 +478,7 @@ function App() {
       if (field === "subline") next.subHeadline = value;
       if (field === "cta") next.ctaText = value;
       if (field === "ctaText") next.cta = value;
+      if (field === "credits") next.credits = value;
       return next;
     });
   }
@@ -1118,6 +1120,15 @@ function App() {
           <Field label="CTA final">
             <textarea rows="2" value={data.ctaText || data.cta} onChange={(event) => updateField("ctaText", event.target.value)} />
           </Field>
+
+          <Field label="Créditos finais">
+            <textarea
+              rows="2"
+              value={data.credits || ""}
+              onChange={(event) => updateField("credits", event.target.value)}
+              placeholder="Ex.: Créditos • @seuusuario"
+            />
+          </Field>
         </aside>
 
         <section className="preview-panel order-1 min-w-0 flex-1 lg:order-2">
@@ -1292,33 +1303,35 @@ const TemplateCanvas = React.forwardRef(function TemplateCanvas(
       {data.eyebrow && <div className="breaking-strip">{data.eyebrow}</div>}
 
       <section className="media-frame">
-        {mediaUrl ? (
-          mediaType === "video" ? (
-            <video
-              ref={videoRef}
-              src={mediaUrl}
-              playsInline
-              style={getMediaElementStyle(data)}
-              onClick={toggleVideoPlayback}
-              onEnded={() => setShowPlay(true)}
-              onPause={() => setShowPlay(true)}
-              onPlay={() => setShowPlay(false)}
-            />
+        <div className="media-shell">
+          {mediaUrl ? (
+            mediaType === "video" ? (
+              <video
+                ref={videoRef}
+                src={mediaUrl}
+                playsInline
+                style={getMediaElementStyle(data)}
+                onClick={toggleVideoPlayback}
+                onEnded={() => setShowPlay(true)}
+                onPause={() => setShowPlay(true)}
+                onPlay={() => setShowPlay(false)}
+              />
+            ) : (
+              <img src={mediaUrl} alt="" style={getMediaElementStyle(data)} />
+            )
           ) : (
-            <img src={mediaUrl} alt="" style={getMediaElementStyle(data)} />
-          )
-        ) : (
-          <div className="media-placeholder" style={{ background: fallbackMedia }}>
-            <LogoIcon size={190} />
-            {templateStyle === "memes" && (
-              <div className="meme-grid-placeholder">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <span key={index}>MEME {index + 1}</span>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+            <div className="media-placeholder" style={{ background: fallbackMedia }}>
+              <LogoIcon size={190} />
+              {templateStyle === "memes" && (
+                <div className="meme-grid-placeholder">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <span key={index}>MEME {index + 1}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         {templateStyle === "news" && (
           <div className="news-video-badges">
             <strong>URGENTE</strong>
@@ -1354,6 +1367,12 @@ const TemplateCanvas = React.forwardRef(function TemplateCanvas(
           );
         })}
       </section>
+
+      {(data.credits || data.username || data.handle) && (
+        <div className="credits-line">
+          <span>{data.credits || `CRÉDITOS • ${data.username || data.handle}`}</span>
+        </div>
+      )}
 
       <footer className="cta-box">
         <Bookmark size={78} />

@@ -1,0 +1,26 @@
+{
+  "name": "Viral Template Studio",
+  "short_name": "Viral Studio",
+  "description": "Editor mobile para templates virais verticais de Reels, TikTok e Shorts.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Abrir editor",
+      "short_name": "Editor",
+      "url": "/"
+    }
+  ]
+}
